@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { PlusCircledIcon, MinusCircledIcon } from '@radix-ui/react-icons';
 
 type User = {
   name: string;
@@ -51,7 +52,7 @@ const UserList: React.FC<UserListProps> = ({ users }) => {
               <td className="p-3 px-5">{user.phone}</td>
               <td className="p-3 px-5">
                 <button onClick={() => deleteUser(user.email)}>
-                  <img src="/delete-icon.png" alt="Delete" />
+                  <MinusCircledIcon />
                 </button>
               </td>
             </tr>
@@ -88,7 +89,9 @@ const UserList: React.FC<UserListProps> = ({ users }) => {
               />
             </td>
             <td className="p-3 px-5">
-              <button type="submit" onClick={handleSubmit}>Add User</button>
+              <button type="submit" onClick={handleSubmit}>
+                <PlusCircledIcon />
+              </button>
             </td>
           </tr>
         </tbody>
