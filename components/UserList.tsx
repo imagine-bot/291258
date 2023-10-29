@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { PlusCircledIcon, MinusCircledIcon } from '@radix-ui/react-icons';
+import { z } from 'zod';
 
 type User = {
   name: string;
@@ -16,7 +17,15 @@ const UserList: React.FC<UserListProps> = ({ users }) => {
   const [newUser, setNewUser] = useState({ name: '', email: '', phone: '' });
 
   const addUser = (user: User) => {
-    setUserList([...userList, user]);
+    const userSchema = z.object({
+      name: z.string(),
+      email: z.string().email(),
+      phone: z.string().regex(/^\d{10}$/),
+    });
+
+    if (userSchema.safeParse(user).success) {
+      setUserList([...userList, user]);
+    }
   };
 
   const deleteUser = (email: string) => {
