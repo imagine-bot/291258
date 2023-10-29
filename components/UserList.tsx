@@ -15,6 +15,7 @@ type UserListProps = {
 const UserList: React.FC<UserListProps> = ({ users }) => {
   const [userList, setUserList] = useState(users);
   const [newUser, setNewUser] = useState({ name: '', email: '', phone: '' });
+  const [error, setError] = useState({ name: '', email: '', phone: '' });
 
   const addUser = (user: User) => {
     const userSchema = z.object({
@@ -23,8 +24,17 @@ const UserList: React.FC<UserListProps> = ({ users }) => {
       phone: z.string().regex(/^\d{10}$/),
     });
 
-    if (userSchema.safeParse(user).success) {
+    const result = userSchema.safeParse(user);
+
+    if (result.success) {
       setUserList([...userList, user]);
+      setError({ name: '', email: '', phone: '' });
+    } else {
+      setError({
+        name: result.error.formErrors.fieldErrors.name ? result.error.formErrors.fieldErrors.name[0] : '',
+        email: result.error.formErrors.fieldErrors.email ? result.error.formErrors.fieldErrors.email[0] : '',
+        phone: result.error.formErrors.fieldErrors.phone ? result.error.formErrors.fieldErrors.phone[0] : '',
+      });
     }
   };
 
@@ -75,7 +85,7 @@ const UserList: React.FC<UserListProps> = ({ users }) => {
             </tr>
           ))}
           <tr className="border-b hover:bg-light-blue-100">
-            <td className="p-3 px-5">
+            <td className={`p-3 px-5 ${error.name && 'bg-red-200'}`}>
               <input
                 type="text"
                 name="name"
@@ -84,8 +94,9 @@ const UserList: React.FC<UserListProps> = ({ users }) => {
                 placeholder="Name"
                 required
               />
+              {error.name && <p className="text-red-500">{error.name}</p>}
             </td>
-            <td className="p-3 px-5">
+            <td className={`p-3 px-5 ${error.email && 'bg-red-200'}`}>
               <input
                 type="email"
                 name="email"
@@ -94,8 +105,9 @@ const UserList: React.FC<UserListProps> = ({ users }) => {
                 placeholder="Email"
                 required
               />
+              {error.email && <p className="text-red-500">{error.email}</p>}
             </td>
-            <td className="p-3 px-5">
+            <td className={`p-3 px-5 ${error.phone && 'bg-red-200'}`}>
               <input
                 type="tel"
                 name="phone"
@@ -105,6 +117,7 @@ const UserList: React.FC<UserListProps> = ({ users }) => {
                 pattern="\d{10}"
                 required
               />
+              {error.phone && <p className="text-red-500">{error.phone}</p>}
             </td>
             <td className="p-3 px-5">
               <button type="submit" onClick={handleSubmit}>
