@@ -61,72 +61,68 @@ const UserList: React.FC<UserListProps> = ({ users }) => {
   };
 
   return (
-    <div className="w-full max-w-full mx-auto overflow-auto">
-      <table className="w-full text-md bg-white shadow-md rounded mb-4">
-        <thead>
-          <tr className="border-b">
-            <th className="text-left p-3 px-5">Name</th>
-            <th className="text-left p-3 px-5">Email</th>
-            <th className="text-left p-3 px-5">Phone</th>
-            <th className="text-left p-3 px-5">Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {userList.map((user, index) => (
-            <tr className="border-b hover:bg-light-blue-100" key={index}>
-              <td className="p-3 px-5">{user.name}</td>
-              <td className="p-3 px-5">{user.email}</td>
-              <td className="p-3 px-5">{user.phone}</td>
-              <td className="p-3 px-5">
-                <button onClick={() => deleteUser(user.email)}>
-                  <MinusCircledIcon />
-                </button>
-              </td>
-            </tr>
-          ))}
-          <tr className="border-b hover:bg-light-blue-100">
-            <td className={`p-3 px-5 ${error.name && 'bg-red-200'}`}>
-              <input
-                type="text"
-                name="name"
-                value={newUser.name}
-                onChange={handleInputChange}
-                placeholder="Name"
-                required
-              />
-              {error.name && <p className="text-red-500">{error.name}</p>}
-            </td>
-            <td className={`p-3 px-5 ${error.email && 'bg-red-200'}`}>
-              <input
-                type="email"
-                name="email"
-                value={newUser.email}
-                onChange={handleInputChange}
-                placeholder="Email"
-                required
-              />
-              {error.email && <p className="text-red-500">{error.email}</p>}
-            </td>
-            <td className={`p-3 px-5 ${error.phone && 'bg-red-200'}`}>
-              <input
-                type="tel"
-                name="phone"
-                value={newUser.phone}
-                onChange={handleInputChange}
-                placeholder="Phone (1234567890)"
-                pattern="\d{10}"
-                required
-              />
-              {error.phone && <p className="text-red-500">{error.phone}</p>}
-            </td>
-            <td className="p-3 px-5">
-              <button type="submit" onClick={handleSubmit}>
-                <PlusCircledIcon />
+    <div>
+      <div>
+        <div>Name</div>
+        <div>Email</div>
+        <div>Phone</div>
+        <div>Actions</div>
+      </div>
+      <div>
+        {userList.map((user, index) => (
+          <div key={index}>
+            <div>{user.name}</div>
+            <div>{user.email}</div>
+            <div>{user.phone}</div>
+            <div>
+              <button onClick={() => deleteUser(user.email)}>
+                <MinusCircledIcon />
               </button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
+            </div>
+          </div>
+        ))}
+        <div>
+          <div>
+            <input
+              type="text"
+              name="name"
+              value={newUser.name}
+              onChange={handleInputChange}
+              placeholder="Name"
+              required
+            />
+            {error.name && <p className="text-red-500">{error.name}</p>}
+          </div>
+          <div>
+            <input
+              type="email"
+              name="email"
+              value={newUser.email}
+              onChange={handleInputChange}
+              placeholder="Email"
+              required
+            />
+            {error.email && <p className="text-red-500">{error.email}</p>}
+          </div>
+          <div>
+            <input
+              type="tel"
+              name="phone"
+              value={newUser.phone}
+              onChange={handleInputChange}
+              placeholder="Phone (1234567890)"
+              pattern="\d{10}"
+              required
+            />
+            {error.phone && <p className="text-red-500">{error.phone}</p>}
+          </div>
+          <div>
+            <button type="submit" onClick={handleSubmit}>
+              <PlusCircledIcon />
+            </button>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };
