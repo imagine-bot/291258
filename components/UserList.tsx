@@ -24,7 +24,15 @@ const UserList: React.FC<UserListProps> = ({ users }) => {
   };
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setNewUser({ ...newUser, [e.target.name]: e.target.value });
+    if (e.target.name === 'phone') {
+      const formattedInput = e.target.value.replace(
+        /^(\d{3})(\d{3})(\d{4})$/,
+        '($1) $2-$3'
+      );
+      setNewUser({ ...newUser, [e.target.name]: formattedInput });
+    } else {
+      setNewUser({ ...newUser, [e.target.name]: e.target.value });
+    }
   };
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -84,7 +92,8 @@ const UserList: React.FC<UserListProps> = ({ users }) => {
                 name="phone"
                 value={newUser.phone}
                 onChange={handleInputChange}
-                placeholder="Phone"
+                placeholder="Phone (1234567890)"
+                pattern="\d{10}"
                 required
               />
             </td>
