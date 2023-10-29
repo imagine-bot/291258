@@ -56,35 +56,43 @@ const UserList: React.FC<UserListProps> = ({ users }) => {
               </td>
             </tr>
           ))}
+          <tr className="border-b hover:bg-orange-100">
+            <td className="p-3 px-5">
+              <input
+                type="text"
+                name="name"
+                value={newUser.name}
+                onChange={handleInputChange}
+                placeholder="Name"
+                required
+              />
+            </td>
+            <td className="p-3 px-5">
+              <input
+                type="email"
+                name="email"
+                value={newUser.email}
+                onChange={handleInputChange}
+                placeholder="Email"
+                required
+              />
+            </td>
+            <td className="p-3 px-5">
+              <input
+                type="tel"
+                name="phone"
+                value={newUser.phone}
+                onChange={handleInputChange}
+                placeholder="Phone"
+                required
+              />
+            </td>
+            <td className="p-3 px-5">
+              <button type="submit" onClick={handleSubmit}>Add User</button>
+            </td>
+          </tr>
         </tbody>
       </table>
-      <form onSubmit={handleSubmit}>
-        <input
-          type="text"
-          name="name"
-          value={newUser.name}
-          onChange={handleInputChange}
-          placeholder="Name"
-          required
-        />
-        <input
-          type="email"
-          name="email"
-          value={newUser.email}
-          onChange={handleInputChange}
-          placeholder="Email"
-          required
-        />
-        <input
-          type="tel"
-          name="phone"
-          value={newUser.phone}
-          onChange={handleInputChange}
-          placeholder="Phone"
-          required
-        />
-        <button type="submit">Add User</button>
-      </form>
     </div>
   );
 };
