@@ -12,6 +12,7 @@ type UserListProps = {
 
 const UserList: React.FC<UserListProps> = ({ users }) => {
   const [userList, setUserList] = useState(users);
+  const [newUser, setNewUser] = useState({ name: '', email: '', phone: '' });
 
   const addUser = (user: User) => {
     setUserList([...userList, user]);
@@ -19,6 +20,16 @@ const UserList: React.FC<UserListProps> = ({ users }) => {
 
   const deleteUser = (email: string) => {
     setUserList(userList.filter(user => user.email !== email));
+  };
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setNewUser({ ...newUser, [e.target.name]: e.target.value });
+  };
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    addUser(newUser);
+    setNewUser({ name: '', email: '', phone: '' });
   };
 
   return (
@@ -39,15 +50,41 @@ const UserList: React.FC<UserListProps> = ({ users }) => {
               <td className="p-3 px-5">{user.email}</td>
               <td className="p-3 px-5">{user.phone}</td>
               <td className="p-3 px-5">
-                <button onClick={() => deleteUser(user.email)}>Delete</button>
+                <button onClick={() => deleteUser(user.email)}>
+                  <img src="/delete-icon.png" alt="Delete" />
+                </button>
               </td>
             </tr>
           ))}
         </tbody>
       </table>
-      <div>
-        <button onClick={() => addUser({ name: 'New User', email: 'new.user@example.com', phone: '000-000-0000' })}>Add User</button>
-      </div>
+      <form onSubmit={handleSubmit}>
+        <input
+          type="text"
+          name="name"
+          value={newUser.name}
+          onChange={handleInputChange}
+          placeholder="Name"
+          required
+        />
+        <input
+          type="email"
+          name="email"
+          value={newUser.email}
+          onChange={handleInputChange}
+          placeholder="Email"
+          required
+        />
+        <input
+          type="tel"
+          name="phone"
+          value={newUser.phone}
+          onChange={handleInputChange}
+          placeholder="Phone"
+          required
+        />
+        <button type="submit">Add User</button>
+      </form>
     </div>
   );
 };
